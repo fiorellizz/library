@@ -36,13 +36,8 @@ def grava_arquivo(type, dados):
         arquivo.close()
         return
 
+# apenas teste
+# livro = {"Titulo":"o Livro","Autor":"Mano douglas","Ano_publicacao":"2015","ISBN":"3265456852445","Categoria":"comedia"}
+# livro2 = {"Titulo":"o Livro2","Autor":"Maninho douglas","Ano_publicacao":"2016","ISBN":"3265456852449","Categoria":"acao"}
 
-
-
-livro = {"Titulo":"o Livro","Autor":"Mano douglas","Ano_publicacao":"2015","ISBN":"3265456852445","Categoria":"comedia"}
-livro2 = {"Titulo":"o Livro2","Autor":"Maninho douglas","Ano_publicacao":"2016","ISBN":"3265456852449","Categoria":"acao"}
-
-
-grava_arquivo("categoria",livro2)
-
-
+# grava_arquivo("categoria",livro2)
