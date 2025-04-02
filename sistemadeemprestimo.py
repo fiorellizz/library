@@ -1,33 +1,9 @@
 import csv
 
-# Função para gravar os dados em um arquivo CSV
-def grava_arquivo(type, dados):
-    tipo = type.casefold()
-    if tipo == "livro":
-        arquivo = open("biblioteca.csv", "a")
-        arquivo.write(f"{dados}" + "\n")
-        arquivo.close()
-        return
-    elif tipo == "usuario":
-        arquivo = open("usuarios.csv", "a")
-        arquivo.write(f"{dados}" + "\n")
-        arquivo.close()
-        return
-    elif tipo == "emprestimo":
-        arquivo = open("emprestimos.csv", "a")
-        arquivo.write(f"{dados}" + "\n")
-        arquivo.close()
-        return
-    elif tipo == "categoria":
-        arquivo = open("categorias.csv", "a")
-        arquivo.write(f"{dados}" + "\n")
-        arquivo.close()
-        return
-    elif tipo == "autor":
-        arquivo = open("autor.csv", "a")
-        arquivo.write(f"{dados}" + "\n")
-        arquivo.close()
-        return
+# já temos essa função criada, não precisa está aqui novamente, apenas importar
+from function import grava_arquivo
+
+# passar para o arquivo com todas as funções e integrar com o arquivo main
 
 # Função para verificar se um livro já está emprestado
 def livro_emprestado(isbn):

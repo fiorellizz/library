@@ -1,16 +1,4 @@
-def painel():
-    print("\n======== Biblioteca Virtual ========")
-    print("Digite 1 para cadastros")
-    print("Digite 2 para listar todos os livros")
-    print("Digite 3 para buscar um livro")
-    print("Digite 0 para sair")
-
-def menu_cadastros():
-    print("\n======== Cadastros ========")
-    print("Digite 1 para cadastros de autor")
-    print("Digite 2 para cadastros de categoria")
-    print("Digite 3 para cadastros de livro")
-    print("Digite 0 para voltar")
+from menu import *
 
 def grava_arquivo(type, dados):
     tipo = type.casefold()
@@ -81,9 +69,13 @@ def ler_arquivo(type):
         print(f"Erro ao ler o arquivo: {e}")
         return []
 
-def cadastar(typeData, data):
-
-    if typeData == "livro":
+def cadastar(data):
+    
+    menu_cadastros()
+    
+    option = int(input("Digite sua escolha: "))
+    
+    if option == 3:
         livro = data
         tituloLivro = input("Digite o título do livro: ")
         anoPublicacaoLivro = int(input("Digite o ano de publicação do livro: "))
@@ -96,6 +88,8 @@ def cadastar(typeData, data):
         autor = input("Digite o autor do livro: ")
         categoria = input("Digite a categoria do livro: ")
 
+        #criar uma função que retorne apenas o dicionario do autor ou do livro de acordo com oq o usuario digitou
+        #essa ler_arquivo retorna tudo do arquivo
         autor = ler_arquivo("autor")
         categoria = ler_arquivo("categoria")
 
@@ -108,7 +102,7 @@ def cadastar(typeData, data):
         except Exception as e:
             print(f"Erro ao cadastrar o livro: {e}")
     
-    elif typeData == "autor":
+    elif option == 1:
         autor = data
         nomeAutor = input("Digite o nome do autor: ")
 
@@ -120,7 +114,7 @@ def cadastar(typeData, data):
         except Exception as e:
             print(f"Erro ao cadastrar o autor: {e}")
 
-    elif typeData == "categoria":
+    elif option == 2:
         categoria = data
         nomeCategoria = input("Digite o nome da categoria: ")
 
@@ -152,10 +146,7 @@ def buscar_livro():
         print("\nNenhum livro cadastrado.")
         return
 
-    print("\nBuscar Livro")
-    print("1 - Buscar por Título")
-    print("2 - Buscar por Autor")
-    print("3 - Buscar por Categoria")
+    menu_busca()
 
     opcao = input("Escolha uma opção: ")
 
