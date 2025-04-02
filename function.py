@@ -1,4 +1,5 @@
 from menu import *
+from variables import *
 
 def grava_arquivo(type, dados):
     tipo = type.casefold()
@@ -69,14 +70,38 @@ def ler_arquivo(type):
         print(f"Erro ao ler o arquivo: {e}")
         return []
 
-def cadastar(data):
+def cadastar():
     
     menu_cadastros()
     
     option = int(input("Digite sua escolha: "))
+
+    if option == 1:
+        autor = autorModelo
+        nomeAutor = input("Digite o nome do autor: ")
+
+        autor["nome"] = nomeAutor
+
+        try:
+            grava_arquivo("autor", autor)
+            print("Autor cadastrado com sucesso!")
+        except Exception as e:
+            print(f"Erro ao cadastrar o autor: {e}")
     
-    if option == 3:
-        livro = data
+    elif option == 2:
+        categoria = categoriaModelo
+        nomeCategoria = input("Digite o nome da categoria: ")
+
+        categoria["nome"] = nomeCategoria
+
+        try:
+            grava_arquivo("categoria", categoria)
+            print("Categoria cadastrada com sucesso!")
+        except Exception as e:
+            print(f"Erro ao cadastrar a categoria: {e}")
+
+    elif option == 3:
+        livro = livroModelo
         tituloLivro = input("Digite o título do livro: ")
         anoPublicacaoLivro = int(input("Digite o ano de publicação do livro: "))
         isbnLivro = input("Digite o ISBN do livro: ")
@@ -102,29 +127,12 @@ def cadastar(data):
         except Exception as e:
             print(f"Erro ao cadastrar o livro: {e}")
     
-    elif option == 1:
-        autor = data
-        nomeAutor = input("Digite o nome do autor: ")
-
-        autor["nome"] = nomeAutor
-
-        try:
-            grava_arquivo("autor", autor)
-            print("Autor cadastrado com sucesso!")
-        except Exception as e:
-            print(f"Erro ao cadastrar o autor: {e}")
-
-    elif option == 2:
-        categoria = data
-        nomeCategoria = input("Digite o nome da categoria: ")
-
-        categoria["nome"] = nomeCategoria
-
-        try:
-            grava_arquivo("categoria", categoria)
-            print("Categoria cadastrada com sucesso!")
-        except Exception as e:
-            print(f"Erro ao cadastrar a categoria: {e}")
+    elif option == 4:
+        ## TODO implementar para cadastrar usuario
+        pass
+    
+    else:
+        print("Opção inválida!")
 
 #inclusão do método listar
 def listar_livros():
@@ -169,3 +177,16 @@ def buscar_livro():
             print(f"Título: {livro['titulo']} | Autor: {livro['autor']['nome']} | Ano: {livro['anoPublicacao']} | ISBN: {livro['ISBN']} | Categoria: {livro['categoria']['nome']}")
     else:
         print("\nNenhum livro encontrado!")
+
+def busca_autor(autorName):
+    ## TODO: imprementar uma função que recebe o nome do autor e verifica se tem no arquivo autor.csv usando a função ler arquivo.
+    ## vamos usar essa função quando for cadastrar um livro
+    pass
+
+def busca_categoria(categoriaName):
+    ## TODO: implementar uma função igual busca_autor() porém recebendo o nome da categoria 
+    pass
+
+def busca_usuario(usuarioName):
+    
+    pass

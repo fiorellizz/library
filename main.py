@@ -1,29 +1,6 @@
 from function import *
 from menu import *
-
-autor = {
-    "id": 1,
-    "nome": "Roberto"
-}
-
-categoria = {
-    "id": 1,
-    "nome": "Romance"
-}
-
-tituloLivro = ""
-anoPublicacaoLivro = 0
-isbnLivro = ""
-
-livro = {
-    "titulo": tituloLivro,
-    "autor": autor,
-    "anoPublicacao": anoPublicacaoLivro,
-    "ISBN": isbnLivro,
-    "categoria": categoria
-}
-
-listaLivros = []
+from variables import *
 
 isRun = True
 

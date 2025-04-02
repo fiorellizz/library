@@ -5,6 +5,7 @@ def painel():
     print("Digite 3 para buscar um livro")
     print("Digite 0 para sair")
 
+#adicionar o cadastro de usuario
 def menu_cadastros():
     print("\n======== Cadastros ========")
     print("Digite 1 para cadastros de autor")
