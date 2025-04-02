@@ -1,43 +1,48 @@
 from menu import *
 from variables import *
 
-def grava_arquivo(type, dados):
-    tipo = type.casefold()
-    if tipo == "livro":    
-        arquivo = open("biblioteca.csv","a")
- 
-        arquivo.write(f"{dados}" +"\n")
+def grava_arquivo(tipo, dados):
+    tipo = tipo.casefold()
+    # Função para pegar o último ID de um arquivo
+    def pega_ultimo_id(arquivo):
+        try:
+            with open(arquivo, "r") as f:
+                linhas = f.readlines()
+                if len(linhas) > 0:
+                    # Supondo que o ID esteja na primeira posição de cada linha (exemplo: ID, Nome, etc)
+                    ultimo_id = int(linhas[-1].split(",")[0])  # Pega o último ID
+                    return ultimo_id
+                else:
+                    return 0  # Se o arquivo estiver vazio, começa com ID 0
+        except FileNotFoundError:
+            return 0  # Se o arquivo não existir, começa com ID 0
 
-        arquivo.close()
-        return
+    if tipo == "livro":
+        arquivo = "biblioteca.csv"
     elif tipo == "usuario":
-        arquivo = open("usuarios.csv","a")
-
-        arquivo.write(f"{dados}" +"\n")
-
-        arquivo.close()
-        return
+        arquivo = "usuarios.csv"
     elif tipo == "emprestimo":
-        arquivo = open("emprestimos.csv","a")
-
-        arquivo.write(f"{dados}" +"\n")
-        
-        arquivo.close()
-        return
+        arquivo = "emprestimos.csv"
     elif tipo == "categoria":
-        arquivo = open("categorias.csv","a")
-        
-        arquivo.write(f"{dados}" +"\n")
-
-        arquivo.close()
-        return        
+        arquivo = "categorias.csv"
     elif tipo == "autor":
-        arquivo = open("autor.csv","a")
-   
-        arquivo.write(f"{dados}" +"\n")
- 
-        arquivo.close()
-        return
+        arquivo = "autor.csv"
+    else:
+        return  # Se o tipo não for válido, sai da função
+
+    # Pega o último ID no arquivo
+    ultimo_id = pega_ultimo_id(arquivo)
+    novo_id = ultimo_id + 1  # Incrementa o ID
+
+    # Se os dados forem uma string, você pode adicionar o novo ID no início da string de dados
+    # Exemplo de estrutura: novo_id, nome, etc.
+    dados_com_id = f"{novo_id},{dados}"
+
+    # Grava o dado no arquivo
+    with open(arquivo, "a") as f:
+        f.write(dados_com_id + "\n")
+
+
 
 #iclusão do metodo para ler o arquivo e realizar a listagem e busca dos dados
 def ler_arquivo(type):

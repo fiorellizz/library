@@ -1,0 +1,2 @@
+1,{'titulo': 'ensinando a ensinar', 'autor': [(1, {'nome': 'douglas simoes'})], 'anoPublicacao': 2014, 'ISBN': '123412341234123', 'categoria': [(1, {'nome': 'educacao'})]}
+2,{'titulo': 'o erro', 'autor': [(1, {'nome': 'douglas simoes'})], 'anoPublicacao': 2012, 'ISBN': '12348290283', 'categoria': [(1, {'nome': 'educacao'})]}
