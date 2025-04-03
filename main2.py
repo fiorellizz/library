@@ -25,6 +25,7 @@ def cadastrar_usuario(emails_cadastrados, lista_usuarios):
     lista_usuarios.append(usuario)
     emails_cadastrados.add(email)
     print("\nUsuário cadastrado com sucesso!")
+    return lista_usuarios
 
 def listar_usuarios(lista_usuarios):
     print("\n--- LISTA DE USUÁRIOS ---")
@@ -38,30 +39,31 @@ def listar_usuarios(lista_usuarios):
         print(f"E-mail: {usuario['email']}")
         print(f"Tipo: {usuario['tipo'].capitalize()}")
 
-def cadastrar_livro(lista):
+def cadastrar_livro(lista_livros, lenLista):
     livro = {}
+    livro['id'] = lenLista + 1
     livro['titulo'] = input('Digite o nome do livro: ')
     livro['autor'] = input('Digite o nome do autor: ')
     livro['anoPublicacao'] = int(input('Digite o ano de publicação: '))
     livro['isbn'] = input('Digite a ISBN: ')
     livro['categoria'] = input('Digite o nome da categoria: ')
-    lista.append(livro)
+    lista_livros.append(livro)
     print('\nLivro cadastrado com sucesso!')
-    return lista
+    return lista_livros
 
-def listar_livros(lista):
-    if not lista:
+def listar_livros(lista_livros):
+    if not lista_livros:
         print("Nenhum livro cadastrado.")
         return
     
     print("\n=== LISTA DE LIVROS ===")
-    for i, livro in enumerate(lista, 1):
+    for i, livro in enumerate(lista_livros, 1):
         print(f"\nLivro {i}:")
         for chave, valor in livro.items():
             print(f"{chave.capitalize()}: {valor}")
 
-def buscar_livros(lista):
-    if not lista:
+def buscar_livros(lista_livros):
+    if not lista_livros:
         print("Nenhum livro cadastrado para buscar.")
         return
     
@@ -75,11 +77,11 @@ def buscar_livros(lista):
     
     resultados = []
     if opcao == 1:
-        resultados = [livro for livro in lista if termo in livro['titulo'].lower()]
+        resultados = [livro for livro in lista_livros if termo in livro['titulo'].lower()]
     elif opcao == 2:
-        resultados = [livro for livro in lista if termo in livro['autor'].lower()]
+        resultados = [livro for livro in lista_livros if termo in livro['autor'].lower()]
     elif opcao == 3:
-        resultados = [livro for livro in lista if termo in livro['categoria'].lower()]
+        resultados = [livro for livro in lista_livros if termo in livro['categoria'].lower()]
     else:
         print("Opção inválida!")
         return
@@ -94,10 +96,12 @@ def buscar_livros(lista):
                 print(f"{chave.capitalize()}: {valor}")
 
 def main():
-    listaLivro = []
+    lista_livros = []
+    lista_usuarios = []  
     emails_cadastrados = set()
-    lista_usuarios = []    
     
+    # ler arquivos csv caso existam e preencher a lista
+
     while True:
         print("\n=== MENU PRINCIPAL ===")
         print("1 - Cadastrar novo livro")
@@ -110,16 +114,20 @@ def main():
         option = int(input("Digite a sua escolha: "))
         
         if option == 1:
-            listaLivro = cadastrar_livro(listaLivro)
+            lista_livros = cadastrar_livro(lista_livros, len(lista_livros))
         elif option == 2:
-            listar_livros(listaLivro)
+            listar_livros(lista_livros)
         elif option == 3:
-            buscar_livros(listaLivro)
+            buscar_livros(lista_livros)
         elif option == 4:
-            cadastrar_usuario(emails_cadastrados, lista_usuarios)
+            lista_usuarios = cadastrar_usuario(emails_cadastrados, lista_usuarios)
         elif option == 5:
             listar_usuarios(lista_usuarios)
         elif option == 0:
+            print(lista_livros)
+            print(lista_usuarios)
+            print(emails_cadastrados)
+            # salvar nos arquivos csv as listas
             print("Saindo do sistema...")
             break
         else:
