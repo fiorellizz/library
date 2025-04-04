@@ -4,6 +4,7 @@ def menu_principal():
     print("2 - Listagens")
     print("3 - Buscar Livro")
     print("4 - Empréstimo")
+    print("5 - Estatísticas")
     print("0 - Sair")
 
 def menu_cadastros():

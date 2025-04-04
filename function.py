@@ -176,21 +176,51 @@ def realizar_emprestimo(lista_livros, lista_usuarios, lista_emprestimo):
         print("Erro: É necessário ter livros e usuários cadastrados para realizar empréstimos.")
         return lista_emprestimo
     
-    listar_livros(lista_livros)
-    livro_id = int(input("\nDigite o ID do livro a ser emprestado: "))
+    # Listar apenas livros disponíveis
+    livros_disponiveis = [livro for livro in lista_livros 
+                         if not any(emp['id_livro'] == livro['id'] for emp in lista_emprestimo)]
     
-    listar_usuarios(lista_usuarios)
-    usuario_id = int(input("\nDigite o ID do usuário que está pegando o livro: "))
+    if not livros_disponiveis:
+        print("Não há livros disponíveis para empréstimo no momento.")
+        return lista_emprestimo
     
-    emprestimo = {
-        'id_livro': livro_id,
-        'id_usuario': usuario_id,
-        'data_emprestimo': input("Data do empréstimo (DD/MM/AAAA): "),
-        'data_devolucao': input("Data prevista para devolução (DD/MM/AAAA): ")
-    }
+    print("\n=== LIVROS DISPONÍVEIS ===")
+    for livro in livros_disponiveis:
+        print(f"\nID: {livro['id']}")
+        print(f"Título: {livro['titulo']}")
+        print(f"Autor: {livro['autor']}")
     
-    lista_emprestimo.append(emprestimo)
-    print("\nEmpréstimo realizado com sucesso!")
+    try:
+        livro_id = int(input("\nDigite o ID do livro a ser emprestado: "))
+        
+        # Verificar se o ID digitado corresponde a um livro disponível
+        livro_selecionado = next((livro for livro in livros_disponiveis if livro['id'] == livro_id), None)
+        
+        if not livro_selecionado:
+            print("Erro: ID do livro inválido. Por favor, selecione um ID da lista de disponíveis.")
+            return lista_emprestimo
+        
+        listar_usuarios(lista_usuarios)
+        usuario_id = int(input("\nDigite o ID do usuário que está pegando o livro: "))
+        
+        # Verificar se o usuário existe
+        if not any(usuario['id'] == usuario_id for usuario in lista_usuarios):
+            print("Erro: ID do usuário inválido.")
+            return lista_emprestimo
+        
+        emprestimo = {
+            'id_livro': livro_id,
+            'id_usuario': usuario_id,
+            'data_emprestimo': input("Data do empréstimo (DD/MM/AAAA): "),
+            'data_devolucao': input("Data prevista para devolução (DD/MM/AAAA): ")
+        }
+        
+        lista_emprestimo.append(emprestimo)
+        print("\nEmpréstimo realizado com sucesso!")
+    
+    except ValueError:
+        print("Erro: Você deve digitar um número válido para o ID.")
+    
     return lista_emprestimo
 
 def grava_arquivos(lista_autores, lista_categorias, lista_emprestimo, lista_livros, lista_usuarios, emails_cadastrados):
@@ -251,6 +281,49 @@ def ler_arquivos(lista_autores, lista_categorias, lista_emprestimo, lista_livros
         except Exception as e:
             print(f"Erro ao ler {nome_arquivo}: {e}")
 
+def livros_por_categoria(lista_livros):
+    """Retorna um dicionário com a quantidade de livros por categoria"""
+    categorias = {}
+    for livro in lista_livros:
+        categoria = livro['categoria']
+        categorias[categoria] = categorias.get(categoria, 0) + 1
+    return categorias
+
+def emprestimos_por_tipo(lista_emprestimo, lista_usuarios):
+    """Retorna um dicionário com a quantidade de empréstimos por tipo de usuário"""
+    tipos = {'aluno': 0, 'professor': 0, 'visitante': 0}
+    
+    for emprestimo in lista_emprestimo:
+        usuario_id = emprestimo['id_usuario']
+        # Encontra o usuário correspondente
+        usuario = next((u for u in lista_usuarios if u['id'] == usuario_id), None)
+        if usuario:
+            tipos[usuario['tipo']] += 1
+    
+    return tipos
+
+def livros_mais_emprestados(lista_emprestimo, lista_livros):
+    top_n=5
+    contagem = {}
+
+    for emprestimo in lista_emprestimo:
+        livro_id = emprestimo['id_livro']
+        contagem[livro_id] = contagem.get(livro_id, 0) + 1
+    
+    livros_ordenados = sorted(contagem.items(), key=lambda x: x[1], reverse=True)
+    
+    resultado = []
+    for livro_id, qtd in livros_ordenados[:top_n]:
+        livro = next((l for l in lista_livros if l['id'] == livro_id), None)
+        if livro:
+            resultado.append({
+                'titulo': livro['titulo'],
+                'autor': livro['autor'],
+                'vezes_emprestado': qtd
+            })
+    
+    return resultado
+
 def cadastros(lista_livros, lista_usuarios, lista_autores, lista_categorias, emails_cadastrados):
     while True:
         menu_cadastros()
@@ -288,3 +361,21 @@ def listagens(lista_livros, lista_usuarios, lista_autores, lista_categorias):
             break
         else:
             print("Opção inválida! Tente novamente.")
+
+def mostrar_estatisticas(lista_livros, lista_usuarios, lista_emprestimo):
+    print("\n=== ESTATÍSTICAS DA BIBLIOTECA ===")
+    
+    print("\nLivros por categoria:")
+    categorias = livros_por_categoria(lista_livros)
+    for categoria, quantidade in categorias.items():
+        print(f"{categoria}: {quantidade} livro(s)")
+    
+    print("\nEmpréstimos por tipo de usuário:")
+    emprestimos_tipo = emprestimos_por_tipo(lista_emprestimo, lista_usuarios)
+    for tipo, quantidade in emprestimos_tipo.items():
+        print(f"{tipo.capitalize()}: {quantidade} empréstimo(s)")
+
+    print("\nTop 5 livros mais emprestados:")
+    top_livros = livros_mais_emprestados(lista_emprestimo, lista_livros)
+    for i, livro in enumerate(top_livros, 1):
+        print(f"{i}. {livro['titulo']} ({livro['autor']}) - {livro['vezes_emprestado']} vez(es)")

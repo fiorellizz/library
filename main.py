@@ -1,4 +1,4 @@
-from function import buscar_livros, cadastros, grava_arquivos, ler_arquivos, listagens, realizar_emprestimo
+from function import buscar_livros, cadastros, grava_arquivos, ler_arquivos, listagens, mostrar_estatisticas, realizar_emprestimo
 from menu import menu_principal
 from variables import *
 
@@ -21,6 +21,8 @@ def main():
             buscar_livros(lista_livros)
         elif opcao == 4:  # Empréstimo
             lista_emprestimo = realizar_emprestimo(lista_livros, lista_usuarios, lista_emprestimo)
+        elif opcao == 5:  # Estatísticas
+            mostrar_estatisticas(lista_livros, lista_usuarios, lista_emprestimo)
         elif opcao == 0:  # Sair
             grava_arquivos(lista_autores, lista_categorias, lista_emprestimo, lista_livros, lista_usuarios, emails_cadastrados)
             print("Saindo do sistema...")
