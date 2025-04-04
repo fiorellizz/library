@@ -1,6 +1,6 @@
-from function import buscar_livros, cadastros, grava_arquivos, ler_arquivos, listagens, mostrar_estatisticas, realizar_emprestimo
+from function import *
 from menu import menu_principal
-from variables import emails_cadastrados, lista_autores, lista_categorias, lista_emprestimo, lista_livros, lista_usuarios
+from variables import *
 
 # Carregar dados dos arquivos
 ler_arquivos(lista_autores, lista_categorias, lista_emprestimo, lista_livros, lista_usuarios, emails_cadastrados)
