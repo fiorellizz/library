@@ -21,4 +21,5 @@ def menu_listagens():
     print("2 - Listar usuários")
     print("3 - Listar autores")
     print("4 - Listar categorias")
+    print("5 - Listar empréstimos")
     print("0 - Voltar")

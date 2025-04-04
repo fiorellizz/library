@@ -135,6 +135,19 @@ def listar_categorias(lista_categorias):
         print(f"\nID: {categoria['id']}")
         print(f"Nome: {categoria['nome']}")
 
+def listar_emprestimos(lista_emprestimo):
+    if not lista_emprestimo:
+        print("Nenhum empréstimo realizado.")
+        return
+    
+    print("\n=== LISTA DE EMPRESTIMOS ===")
+    for emprestimo in lista_emprestimo:
+        print(f"\nID: {emprestimo['id']}")
+        print(f"Livro: {emprestimo['livro']}")
+        print(f"Usuário: {emprestimo['usuario']}")
+        print(f"Data de Emprestimo: {emprestimo['dataEmprestimo']}")
+        print(f"Data de Devolução: {emprestimo['dataDevolucao']}")
+
 def buscar_livros(lista_livros):
     if not lista_livros:
         print("Nenhum livro cadastrado para buscar.")
@@ -176,7 +189,6 @@ def realizar_emprestimo(lista_livros, lista_usuarios, lista_emprestimo):
         print("Erro: É necessário ter livros e usuários cadastrados para realizar empréstimos.")
         return lista_emprestimo
     
-    # Listar apenas livros disponíveis
     livros_disponiveis = [livro for livro in lista_livros 
                          if not any(emp['id_livro'] == livro['id'] for emp in lista_emprestimo)]
     
@@ -193,7 +205,6 @@ def realizar_emprestimo(lista_livros, lista_usuarios, lista_emprestimo):
     try:
         livro_id = int(input("\nDigite o ID do livro a ser emprestado: "))
         
-        # Verificar se o ID digitado corresponde a um livro disponível
         livro_selecionado = next((livro for livro in livros_disponiveis if livro['id'] == livro_id), None)
         
         if not livro_selecionado:
@@ -203,7 +214,6 @@ def realizar_emprestimo(lista_livros, lista_usuarios, lista_emprestimo):
         listar_usuarios(lista_usuarios)
         usuario_id = int(input("\nDigite o ID do usuário que está pegando o livro: "))
         
-        # Verificar se o usuário existe
         if not any(usuario['id'] == usuario_id for usuario in lista_usuarios):
             print("Erro: ID do usuário inválido.")
             return lista_emprestimo
@@ -344,7 +354,7 @@ def cadastros(lista_livros, lista_usuarios, lista_autores, lista_categorias, ema
     
     return lista_livros, lista_usuarios, lista_autores, lista_categorias
 
-def listagens(lista_livros, lista_usuarios, lista_autores, lista_categorias):
+def listagens(lista_livros, lista_usuarios, lista_autores, lista_categorias, lista_emprestimo):
     while True:
         menu_listagens()
         opcao = int(input("Digite a sua escolha: "))
@@ -357,6 +367,8 @@ def listagens(lista_livros, lista_usuarios, lista_autores, lista_categorias):
             listar_autores(lista_autores)
         elif opcao == 4:
             listar_categorias(lista_categorias)
+        elif opcao == 5:
+            listar_emprestimos(lista_emprestimo)
         elif opcao == 0:
             break
         else:

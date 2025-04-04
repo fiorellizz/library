@@ -16,7 +16,7 @@ def main():
                 lista_livros, lista_usuarios, lista_autores, lista_categorias, emails_cadastrados
             )
         elif opcao == 2:  # Listagens
-            listagens(lista_livros, lista_usuarios, lista_autores, lista_categorias)
+            listagens(lista_livros, lista_usuarios, lista_autores, lista_categorias, lista_emprestimo)
         elif opcao == 3:  # Buscar Livro
             buscar_livros(lista_livros)
         elif opcao == 4:  # Empréstimo
