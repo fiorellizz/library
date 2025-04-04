@@ -143,10 +143,10 @@ def listar_emprestimos(lista_emprestimo):
     print("\n=== LISTA DE EMPRESTIMOS ===")
     for emprestimo in lista_emprestimo:
         print(f"\nID: {emprestimo['id']}")
-        print(f"Livro: {emprestimo['livro']}")
-        print(f"Usuário: {emprestimo['usuario']}")
-        print(f"Data de Emprestimo: {emprestimo['dataEmprestimo']}")
-        print(f"Data de Devolução: {emprestimo['dataDevolucao']}")
+        print(f"Livro: {emprestimo['livro_id']}")
+        print(f"Usuário: {emprestimo['usuario_id']}")
+        print(f"Data de Emprestimo: {emprestimo['data_emprestimo']}")
+        print(f"Data de Devolução: {emprestimo['data_devolucao']}")
 
 def buscar_livros(lista_livros):
     if not lista_livros:
@@ -218,9 +218,12 @@ def realizar_emprestimo(lista_livros, lista_usuarios, lista_emprestimo):
             print("Erro: ID do usuário inválido.")
             return lista_emprestimo
         
+        id_unico = len(lista_emprestimo) + 1
+
         emprestimo = {
-            'id_livro': livro_id,
-            'id_usuario': usuario_id,
+            'id': id_unico,
+            'livro_id': livro_id,
+            'usuario_id': usuario_id,
             'data_emprestimo': input("Data do empréstimo (DD/MM/AAAA): "),
             'data_devolucao': input("Data prevista para devolução (DD/MM/AAAA): ")
         }
