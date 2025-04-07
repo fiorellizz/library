@@ -56,7 +56,10 @@ Sistema completo para gerenciamento de bibliotecas digitais com cadastro de livr
 ## 🗂️ Estrutura do Projeto
 
 ```markdown
-- biblioteca/
+- library/
+    ├── docs/ - Documentação do projeto
+    ├── LICENSE - Licenca do projeto
+    ├── main.py - Ponto de entrada do programa
     ├── function.py - Lógica principal do programa
     ├── menu.py - Definição dos menus
     ├── variables.py - Variáveis globais
