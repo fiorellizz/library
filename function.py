@@ -42,14 +42,55 @@ def listar_usuarios(lista_usuarios):
         print(f"E-mail: {usuario['email']}")
         print(f"Tipo: {usuario['tipo'].capitalize()}")
 
-def cadastrar_livro(lista_livros):
-    id_unico = len(lista_livros) + 1
-    livro = {}
-    livro['id'] = id_unico
-    livro['titulo'] = input('Digite o nome do livro: ')
-    livro['autor'] = input('Digite o nome do autor: ')
-    livro['anoPublicacao'] = input('Digite o ano de publicação: ')
+def cadastrar_livro(lista_livros, lista_autores, lista_categorias):
+    if not lista_autores:
+        print("\nErro: Não existem autores cadastrados. Cadastre um autor primeiro.")
+        return lista_livros, lista_autores, lista_categorias
     
+    if not lista_categorias:
+        print("\nErro: Não existem categorias cadastradas. Cadastre uma categoria primeiro.")
+        return lista_livros, lista_autores, lista_categorias
+    
+    print("\n=== AUTORES DISPONÍVEIS ===")
+    for autor in lista_autores:
+        print(f"ID: {autor['id']} - Nome: {autor['nome']}")
+    
+    try:
+        autor_id = int(input("\nDigite o ID do autor: "))
+        autor_selecionado = next((a for a in lista_autores if a['id'] == autor_id), None)
+        
+        if not autor_selecionado:
+            print("Erro: ID do autor inválido.")
+            return lista_livros, lista_autores, lista_categorias
+    except ValueError:
+        print("Erro: Digite um número válido para o ID do autor.")
+        return lista_livros, lista_autores, lista_categorias
+    
+    print("\n=== CATEGORIAS DISPONÍVEIS ===")
+    for categoria in lista_categorias:
+        print(f"ID: {categoria['id']} - Nome: {categoria['nome']}")
+    
+    try:
+        categoria_id = int(input("\nDigite o ID da categoria: "))
+        categoria_selecionada = next((c for c in lista_categorias if c['id'] == categoria_id), None)
+        
+        if not categoria_selecionada:
+            print("Erro: ID da categoria inválido.")
+            return lista_livros, lista_autores, lista_categorias
+    except ValueError:
+        print("Erro: Digite um número válido para o ID da categoria.")
+        return lista_livros, lista_autores, lista_categorias
+    
+    id_unico = len(lista_livros) + 1
+    livro = {
+        'id': id_unico,
+        'titulo': input('Digite o título do livro: '),
+        'autor': autor_selecionado['nome'],
+        'anoPublicacao': input('Digite o ano de publicação: '),
+        'categoria': categoria_selecionada['nome']
+    }
+    
+    # Validação da ISBN
     while True:
         isbn = input('Digite a ISBN: ')
         if any(livro.get('isbn') == isbn for livro in lista_livros):
@@ -58,11 +99,10 @@ def cadastrar_livro(lista_livros):
             livro['isbn'] = isbn
             break
     
-    livro['categoria'] = input('Digite o nome da categoria: ')
     lista_livros.append(livro)
     print('\nLivro cadastrado com sucesso!')
     
-    return lista_livros
+    return lista_livros, lista_autores, lista_categorias
 
 def cadastrar_autor(lista_autores):
     id_unico = len(lista_autores) + 1
@@ -137,7 +177,7 @@ def listar_categorias(lista_categorias):
 
 def listar_emprestimos(lista_emprestimo):
     if not lista_emprestimo:
-        print("Nenhum empréstimo realizado.")
+        print("\nNenhum empréstimo realizado.")
         return
     
     print("\n=== LISTA DE EMPRESTIMOS ===")
@@ -190,7 +230,7 @@ def realizar_emprestimo(lista_livros, lista_usuarios, lista_emprestimo):
         return lista_emprestimo
     
     livros_disponiveis = [livro for livro in lista_livros 
-                         if not any(emp['id_livro'] == livro['id'] for emp in lista_emprestimo)]
+                         if not any(emp['livro_id'] == livro['id'] for emp in lista_emprestimo)]
     
     if not livros_disponiveis:
         print("Não há livros disponíveis para empréstimo no momento.")
@@ -343,7 +383,7 @@ def cadastros(lista_livros, lista_usuarios, lista_autores, lista_categorias, ema
         opcao = int(input("Digite a sua escolha: "))
         
         if opcao == 1:
-            lista_livros = cadastrar_livro(lista_livros)
+            lista_livros, lista_autores, lista_categorias = cadastrar_livro(lista_livros, lista_autores, lista_categorias)
         elif opcao == 2:
             lista_usuarios = cadastrar_usuario(emails_cadastrados, lista_usuarios)
         elif opcao == 3:
