@@ -53,20 +53,20 @@ Sistema completo para gerenciamento de bibliotecas digitais com cadastro de livr
 - Navegação intuitiva
 - Formulários com validação
 
-```markdown
 ## 🗂️ Estrutura do Projeto
 
-- `biblioteca/`
-  - `main.py` - Ponto de entrada do sistema
-  - `function.py` - Lógica principal do programa
-  - `menu.py` - Definição dos menus
-  - `variables.py` - Variáveis globais
-  - `autores.csv` - Base de autores cadastrados
-  - `categorias.csv` - Categorias de livros
-  - `emprestimos.csv` - Histórico de empréstimos
-  - `livros.csv` - Acervo completo
-  - `usuarios.csv` - Usuários cadastrados
-  - `emails.txt` - Controle de emails únicos
+```markdown
+- biblioteca/
+  - main.py - Ponto de entrada do sistema
+  - function.py - Lógica principal do programa
+  - menu.py - Definição dos menus
+  - variables.py - Variáveis globais
+  - autores.csv - Base de autores cadastrados
+  - categorias.csv - Categorias de livros
+  - emprestimos.csv - Histórico de empréstimos
+  - livros.csv - Acervo completo
+  - usuarios.csv - Usuários cadastrados
+  - emails.txt - Controle de emails únicos
 ```
 
 ## 🚀 Como Executar
