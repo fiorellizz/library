@@ -234,7 +234,7 @@ def realizar_emprestimo(lista_livros, lista_usuarios, lista_emprestimo):
         return lista_emprestimo
     
     livros_disponiveis = [livro for livro in lista_livros 
-                         if not any(emp['livro_id'] == livro['id'] for emp in lista_emprestimo)]
+                         if not any(int(emp['livro_id']) == livro['id'] for emp in lista_emprestimo)]
     
     if not livros_disponiveis:
         print("Não há livros disponíveis para empréstimo no momento.")
