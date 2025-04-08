@@ -210,7 +210,11 @@ def buscar_livros(lista_livros):
         resultados = [livro for livro in lista_livros if termo in livro['categoria'].lower()]
     else:
         print("Opção inválida!")
-        return
+        option = input("deseja continuar a busca(S/N): ")
+        if option.lower() == "s":
+            return buscar_livros(lista_livros)
+        else: 
+            return    
     
     if not resultados:
         print("Nenhum livro encontrado.")
