@@ -347,9 +347,10 @@ def emprestimos_por_tipo(lista_emprestimo, lista_usuarios):
     tipos = {'aluno': 0, 'professor': 0, 'visitante': 0}
     
     for emprestimo in lista_emprestimo:
-        usuario_id = emprestimo['usuario_id']
+        usuario_id = int(emprestimo['usuario_id'])
         # Encontra o usuário correspondente
         usuario = next((u for u in lista_usuarios if u['id'] == usuario_id), None)
+        
         if usuario:
             tipos[usuario['tipo']] += 1
     
